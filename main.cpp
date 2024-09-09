@@ -1,8 +1,12 @@
 
 #include "main.h"
 #include<iostream>
-#include <chrono>
-#include <iomanip>
+#include <chrono> // Chronometer
+#include <iomanip> // Set Second precision
+#include <cstdlib> // Generare random numbers
+#include <ctime>   // Needed for time()
+
+
 
 using namespace std;
 
@@ -51,14 +55,31 @@ int main(){
     // *** Timer Start ***
     auto start = chrono::high_resolution_clock::now();
 
-    float arreglo[] = {3, 5, 7, 3, 2, 5, 9, 7, 1};
-    quickSort(arreglo, 0, 8);
+    srand(time(0));
+    int randomNum;
 
-    cout << "Arreglo ordenado ascendente: " << endl;
+    float arreglo[5000];
 
-    for(int i = 0; i < 9; i++){
-        cout << arreglo[i];
+    for(int i = 0; i < 5000; i++){
+        randomNum = rand() % 100 + 1;
+        arreglo[i] = randomNum;
+
     }
+
+    cout << "Arreglo desordenado: " << "{";
+    for(int i = 0; i < 4999; i++){
+        cout << arreglo[i] << " ";
+    }
+    cout << "}" << endl;
+
+
+    quickSort(arreglo, 0, 4999);
+
+    cout << "Arreglo ordenado ascendente: " << "{";
+    for(int i = 0; i < 4999; i++){
+        cout << arreglo[i] << " ";
+    }
+    cout << "}" << endl;
 
     // *** Timer end ***
     auto end = chrono::high_resolution_clock::now();
