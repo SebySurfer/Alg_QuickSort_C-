@@ -1,6 +1,8 @@
 
 #include "main.h"
 #include<iostream>
+#include <chrono>
+#include <iomanip>
 
 using namespace std;
 
@@ -46,6 +48,8 @@ void quickSort(float a[], int primero, int ultimo) {
 
 
 int main(){
+    // *** Timer Start ***
+    auto start = chrono::high_resolution_clock::now();
 
     float arreglo[] = {3, 5, 7, 3, 2, 5, 9, 7, 1};
     quickSort(arreglo, 0, 8);
@@ -56,6 +60,16 @@ int main(){
         cout << arreglo[i];
     }
 
+    // *** Timer end ***
+    auto end = chrono::high_resolution_clock::now();
+
+    //Timer difference
+    chrono::duration<double> duration = end - start;
+
+    //Duration
+    cout << endl ;
+    cout << fixed << setprecision(9);
+    cout << "Runtime: " << duration.count() << " seconds" << endl;
 
 
     return 0;
