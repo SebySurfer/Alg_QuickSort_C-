@@ -75,17 +75,18 @@ int main(){
     }
 
     cout << "Arreglo desordenado: " << "{";
-
-
+    print(arreglo);
 
     quickSort(arreglo, 0, 4999);
 
     cout << "Arreglo ordenado ascendente: " << "{";
     print(arreglo);
 
+
+
     // *** Timer end ***
     auto end = chrono::high_resolution_clock::now();
-    print(arreglo);
+
 
     //Timer difference
     chrono::duration<double> duration = end - start;
