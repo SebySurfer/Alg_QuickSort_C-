@@ -98,4 +98,4 @@ int main(){
 //Runtime: 0.036108885 seconds before print deletion
 //Runtime: 0.000545878 seconds after print deletion
 
-//Runtime: 0.030000000 seconds after opt random
+//Runtime: < 0.030000000 seconds after opt random
