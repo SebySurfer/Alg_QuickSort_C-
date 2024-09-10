@@ -95,3 +95,5 @@ int main(){
 
     return 0;
 }
+//Runtime: 0.036108885 seconds before print deletion
+//Runtime: 0.000545878 seconds after print deletion
