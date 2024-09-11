@@ -5,6 +5,7 @@
 #include <iomanip> // Set Second precision
 #include <cstdlib> // Generare random numbers
 #include <ctime>   // Needed for time()
+#include <thread>
 
 
 
@@ -50,6 +51,14 @@ void quickSort(float a[], int primero, int ultimo) {
 
 }
 
+void print(float a[]){
+    for(int i = 0; i < 4999; i++){
+        cout << a[i] << " ";
+    }
+    cout << "}" << endl;
+
+}
+
 
 int main(){
     // *** Timer Start ***
@@ -66,23 +75,27 @@ int main(){
         arreglo[i+3] = (rand() / (RAND_MAX / 100 + 1)) + 1;
     }
 
-    cout << "Arreglo desordenado: " << "{";
-    for(int i = 0; i < 4999; i++){
-        cout << arreglo[i] << " ";
-    }
-    cout << "}" << endl;
+    thread p1(print, arreglo);
+    thread qs(quickSort, arreglo, 0, 4999);
 
+    qs.join();
+    thread p2(print, arreglo);
+
+
+
+    cout << "Arreglo desordenado: " << "{";
+    print(arreglo);
 
     quickSort(arreglo, 0, 4999);
 
     cout << "Arreglo ordenado ascendente: " << "{";
-    for(int i = 0; i < 4999; i++){
-        cout << arreglo[i] << " ";
-    }
-    cout << "}" << endl;
+    print(arreglo);
+
+
 
     // *** Timer end ***
     auto end = chrono::high_resolution_clock::now();
+
 
     //Timer difference
     chrono::duration<double> duration = end - start;
@@ -99,3 +112,4 @@ int main(){
 //Runtime: 0.000545878 seconds after print deletion
 
 //Runtime: < 0.030000000 seconds after opt random
+//Runtime: < 0.025000000 seconds after using print statements as classes
