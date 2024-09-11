@@ -77,21 +77,19 @@ int main(){
 
     thread p(print, arreglo);
 
-    for(int i = 0; i < 5000; i += 4) {
+    for(int i = 0; i < 5000; i += 2) {
         arreglo[i] = (rand() / (RAND_MAX / 100 + 1)) + 1;
         arreglo[i+1] = (rand() / (RAND_MAX / 100 + 1)) + 1;
-        arreglo[i+2] = (rand() / (RAND_MAX / 100 + 1)) + 1;
-        arreglo[i+3] = (rand() / (RAND_MAX / 100 + 1)) + 1;
+
 
         arreglo[i+5000] = arreglo[i];
         arreglo[i+1+5000] = arreglo[i+1];
-        arreglo[i+2+5000] = arreglo[i+2];
-        arreglo[i+3+5000] = arreglo[i+3];
+
     }
 
     quickSort(arreglo, 5000, 9999);
-
     p.join();
+
 
     // *** Timer end ***
     auto end = chrono::high_resolution_clock::now();
