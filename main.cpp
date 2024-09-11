@@ -5,6 +5,7 @@
 #include <iomanip> // Set Second precision
 #include <cstdlib> // Generare random numbers
 #include <ctime>   // Needed for time()
+#include <thread>
 
 
 
@@ -73,6 +74,14 @@ int main(){
         arreglo[i+2] = (rand() / (RAND_MAX / 100 + 1)) + 1;
         arreglo[i+3] = (rand() / (RAND_MAX / 100 + 1)) + 1;
     }
+
+    thread p1(print, arreglo);
+    thread qs(quickSort, arreglo, 0, 4999);
+
+    qs.join();
+    thread p2(print, arreglo);
+
+
 
     cout << "Arreglo desordenado: " << "{";
     print(arreglo);
