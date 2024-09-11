@@ -52,7 +52,14 @@ void quickSort(float a[], int primero, int ultimo) {
 }
 
 void print(float a[]){
-    for(int i = 0; i < 4999; i++){
+    cout << "Arreglo desordenado: " << "{";
+    for(int i = 0; i < 5000; i++){
+        cout << a[i] << " ";
+    }
+    cout << "}" << endl;
+
+    cout << "Arreglo ordenado asc: " << "{";
+    for(int i = 5000; i < 10000; i++){
         cout << a[i] << " ";
     }
     cout << "}" << endl;
@@ -66,36 +73,28 @@ int main(){
 
     srand(time(0));
 
-    float arreglo[5000];
+    float arreglo[10000];
+
+    thread p(print, arreglo);
 
     for(int i = 0; i < 5000; i += 4) {
         arreglo[i] = (rand() / (RAND_MAX / 100 + 1)) + 1;
         arreglo[i+1] = (rand() / (RAND_MAX / 100 + 1)) + 1;
         arreglo[i+2] = (rand() / (RAND_MAX / 100 + 1)) + 1;
         arreglo[i+3] = (rand() / (RAND_MAX / 100 + 1)) + 1;
+
+        arreglo[i+5000] = arreglo[i];
+        arreglo[i+1+5000] = arreglo[i+1];
+        arreglo[i+2+5000] = arreglo[i+2];
+        arreglo[i+3+5000] = arreglo[i+3];
     }
 
-    thread p1(print, arreglo);
-    thread qs(quickSort, arreglo, 0, 4999);
+    quickSort(arreglo, 5000, 9999);
 
-    qs.join();
-    thread p2(print, arreglo);
-
-
-
-    cout << "Arreglo desordenado: " << "{";
-    print(arreglo);
-
-    quickSort(arreglo, 0, 4999);
-
-    cout << "Arreglo ordenado ascendente: " << "{";
-    print(arreglo);
-
-
+    p.join();
 
     // *** Timer end ***
     auto end = chrono::high_resolution_clock::now();
-
 
     //Timer difference
     chrono::duration<double> duration = end - start;
