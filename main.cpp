@@ -122,4 +122,5 @@ int main(){
 //Runtime: 0.005414678 seconds - print to 4 pair
 //Runtime: 0.004776484 seconds - Using future threads
 //Runtime: 0.004437304 seconds - Second try future threads
+//Runtime: 0.004289457 seconds - Third try future threads
 
