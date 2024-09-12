@@ -5,20 +5,14 @@
 #include <iomanip> // Set Second precision
 #include <cstdlib> // Generare random numbers
 #include <ctime>   // Needed for time()
-#include <thread>
+#include <future>
 
 
 
 using namespace std;
 
-void intercambio(float &x, float &y){
-    float aux;
-    aux = x;
-    x = y;
-    y = aux;
-}
 
-void quickSort(float a[], int primero, int ultimo) {
+void quickSort(int a[], int primero, int ultimo) {
     int i, j, central;
     float pivote;
 
@@ -36,7 +30,9 @@ void quickSort(float a[], int primero, int ultimo) {
         }
 
         if (i <= j) {
-            intercambio(a[i], a[j]);
+            float aux = a[i];
+            a[i] = a[j];
+            a[j] = aux;
             i++;
             j--;
         }
@@ -51,8 +47,15 @@ void quickSort(float a[], int primero, int ultimo) {
 
 }
 
-void print(float a[]){
-    for(int i = 0; i < 4999; i++){
+void print(int a[]){
+    cout << "Arreglo desordenado: " << "{";
+    for(int i = 0; i < 5000; i++){
+        cout << a[i] << " ";
+    }
+    cout << "}" << endl;
+
+    cout << "Arreglo ordenado asc: " << "{";
+    for(int i = 5000; i < 10000; i++){
         cout << a[i] << " ";
     }
     cout << "}" << endl;
@@ -66,36 +69,36 @@ int main(){
 
     srand(time(0));
 
-    float arreglo[5000];
+    int arreglo[10000];
+
+    future <void> asyncPrint = async(&print, arreglo);
+
+    //thread p(print, arreglo);
 
     for(int i = 0; i < 5000; i += 4) {
         arreglo[i] = (rand() / (RAND_MAX / 100 + 1)) + 1;
         arreglo[i+1] = (rand() / (RAND_MAX / 100 + 1)) + 1;
         arreglo[i+2] = (rand() / (RAND_MAX / 100 + 1)) + 1;
         arreglo[i+3] = (rand() / (RAND_MAX / 100 + 1)) + 1;
+
+        arreglo[i+5000] = arreglo[i];
+        arreglo[i+1+5000] = arreglo[i+1];
+        arreglo[i+2+5000] = arreglo[i+2];
+        arreglo[i+3+5000] = arreglo[i+3];
+
+
     }
 
-    thread p1(print, arreglo);
-    thread qs(quickSort, arreglo, 0, 4999);
 
-    qs.join();
-    thread p2(print, arreglo);
+    quickSort(arreglo, 5000, 9999);
+    //p.join();
 
 
-
-    cout << "Arreglo desordenado: " << "{";
-    print(arreglo);
-
-    quickSort(arreglo, 0, 4999);
-
-    cout << "Arreglo ordenado ascendente: " << "{";
-    print(arreglo);
-
-
+    //Finish subthread
+    asyncPrint.get();
 
     // *** Timer end ***
     auto end = chrono::high_resolution_clock::now();
-
 
     //Timer difference
     chrono::duration<double> duration = end - start;
@@ -107,9 +110,16 @@ int main(){
 
 
     return 0;
+
+
 }
 //Runtime: 0.036108885 seconds before print deletion
 //Runtime: 0.000545878 seconds after print deletion
 
 //Runtime: < 0.030000000 seconds after opt random
 //Runtime: < 0.025000000 seconds after using print statements as classes
+
+//Runtime: 0.005414678 seconds - print to 4 pair
+//Runtime: 0.004776484 seconds - Using future threads
+//Runtime: 0.004437304 seconds - Second try future threads
+
