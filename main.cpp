@@ -11,12 +11,6 @@
 
 using namespace std;
 
-void intercambio(float &x, float &y){
-    float aux;
-    aux = x;
-    x = y;
-    y = aux;
-}
 
 void quickSort(float a[], int primero, int ultimo) {
     int i, j, central;
@@ -36,7 +30,9 @@ void quickSort(float a[], int primero, int ultimo) {
         }
 
         if (i <= j) {
-            intercambio(a[i], a[j]);
+            float aux = a[i];
+            a[i] = a[j];
+            a[j] = aux;
             i++;
             j--;
         }
@@ -77,15 +73,20 @@ int main(){
 
     thread p(print, arreglo);
 
-    for(int i = 0; i < 5000; i += 2) {
+    for(int i = 0; i < 5000; i += 4) {
         arreglo[i] = (rand() / (RAND_MAX / 100 + 1)) + 1;
         arreglo[i+1] = (rand() / (RAND_MAX / 100 + 1)) + 1;
-
+        arreglo[i+2] = (rand() / (RAND_MAX / 100 + 1)) + 1;
+        arreglo[i+3] = (rand() / (RAND_MAX / 100 + 1)) + 1;
 
         arreglo[i+5000] = arreglo[i];
         arreglo[i+1+5000] = arreglo[i+1];
+        arreglo[i+2+5000] = arreglo[i+2];
+        arreglo[i+3+5000] = arreglo[i+3];
+
 
     }
+
 
     quickSort(arreglo, 5000, 9999);
     p.join();
@@ -110,3 +111,5 @@ int main(){
 
 //Runtime: < 0.030000000 seconds after opt random
 //Runtime: < 0.025000000 seconds after using print statements as classes
+
+//Runtime: 0.005414678 seconds - print to 4 pair
