@@ -5,14 +5,14 @@
 #include <iomanip> // Set Second precision
 #include <cstdlib> // Generare random numbers
 #include <ctime>   // Needed for time()
-#include <thread>
+#include <future>
 
 
 
 using namespace std;
 
 
-void quickSort(float a[], int primero, int ultimo) {
+void quickSort(int a[], int primero, int ultimo) {
     int i, j, central;
     float pivote;
 
@@ -47,7 +47,7 @@ void quickSort(float a[], int primero, int ultimo) {
 
 }
 
-void print(float a[]){
+void print(int a[]){
     cout << "Arreglo desordenado: " << "{";
     for(int i = 0; i < 5000; i++){
         cout << a[i] << " ";
@@ -69,9 +69,11 @@ int main(){
 
     srand(time(0));
 
-    float arreglo[10000];
+    int arreglo[10000];
 
-    thread p(print, arreglo);
+    future <void> asyncPrint = async(&print, arreglo);
+
+    //thread p(print, arreglo);
 
     for(int i = 0; i < 5000; i += 4) {
         arreglo[i] = (rand() / (RAND_MAX / 100 + 1)) + 1;
@@ -89,8 +91,11 @@ int main(){
 
 
     quickSort(arreglo, 5000, 9999);
-    p.join();
+    //p.join();
 
+
+    //Finish subthread
+    asyncPrint.get();
 
     // *** Timer end ***
     auto end = chrono::high_resolution_clock::now();
@@ -105,6 +110,8 @@ int main(){
 
 
     return 0;
+
+
 }
 //Runtime: 0.036108885 seconds before print deletion
 //Runtime: 0.000545878 seconds after print deletion
@@ -113,3 +120,6 @@ int main(){
 //Runtime: < 0.025000000 seconds after using print statements as classes
 
 //Runtime: 0.005414678 seconds - print to 4 pair
+//Runtime: 0.004776484 seconds - Using future threads
+//Runtime: 0.004437304 seconds - Second try future threads
+
