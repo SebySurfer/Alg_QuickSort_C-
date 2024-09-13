@@ -6,6 +6,7 @@
 #include <cstdlib> // Generare random numbers
 #include <ctime>   // Needed for time()
 #include <future>
+#include <sstream>
 
 
 
@@ -48,17 +49,20 @@ void quickSort(int a[], int primero, int ultimo) {
 }
 
 void print(int a[]){
-    cout << "Arreglo desordenado: " << "{";
+    stringstream ss;
+    ss << "Arreglo desordenado: " << "{";
     for(int i = 0; i < 5000; i++){
-        cout << a[i] << " ";
+        ss << a[i] << " ";
     }
-    cout << "}" << endl;
+    ss << "}" << endl;
 
-    cout << "Arreglo ordenado asc: " << "{";
+    ss << "Arreglo ordenado asc: " << "{";
     for(int i = 5000; i < 10000; i++){
-        cout << a[i] << " ";
+        ss << a[i] << " ";
     }
-    cout << "}" << endl;
+    ss << "}" << endl;
+
+    cout << ss.str();
 
 }
 
