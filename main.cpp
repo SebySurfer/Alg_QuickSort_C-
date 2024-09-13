@@ -3,10 +3,10 @@
 #include<iostream>
 #include <chrono> // Chronometer
 #include <iomanip> // Set Second precision
-#include <cstdlib> // Generare random numbers
 #include <ctime>   // Needed for time()
 #include <future>
-
+#include <sstream>
+#include <random>
 
 
 using namespace std;
@@ -48,17 +48,19 @@ void quickSort(int a[], int primero, int ultimo) {
 }
 
 void print(int a[]){
-    cout << "Arreglo desordenado: " << "{";
+    stringstream ss;
+    ss << "Arreglo desordenado: ";
     for(int i = 0; i < 5000; i++){
-        cout << a[i] << " ";
+        ss << a[i] << " ";
     }
-    cout << "}" << endl;
+    ss << endl;
 
-    cout << "Arreglo ordenado asc: " << "{";
+    ss << "Arreglo ordenado: ";
     for(int i = 5000; i < 10000; i++){
-        cout << a[i] << " ";
+        ss << a[i] << " ";
     }
-    cout << "}" << endl;
+
+    cout << ss.str();
 
 }
 
@@ -67,7 +69,6 @@ int main(){
     // *** Timer Start ***
     auto start = chrono::high_resolution_clock::now();
 
-    srand(time(0));
 
     int arreglo[10000];
 
@@ -75,18 +76,40 @@ int main(){
 
     //thread p(print, arreglo);
 
-    for(int i = 0; i < 5000; i += 4) {
-        arreglo[i] = (rand() / (RAND_MAX / 100 + 1)) + 1;
-        arreglo[i+1] = (rand() / (RAND_MAX / 100 + 1)) + 1;
-        arreglo[i+2] = (rand() / (RAND_MAX / 100 + 1)) + 1;
-        arreglo[i+3] = (rand() / (RAND_MAX / 100 + 1)) + 1;
+    // Set up random number generator
+    mt19937 rng(time(0)); // Seed with current time
+    uniform_int_distribution<int> dist(1, 100);
 
-        arreglo[i+5000] = arreglo[i];
-        arreglo[i+1+5000] = arreglo[i+1];
-        arreglo[i+2+5000] = arreglo[i+2];
-        arreglo[i+3+5000] = arreglo[i+3];
+    // Loop unrolled to process 8 elements per iteration
+    for (int i = 0; i < 5000; i += 8) {
+        int r1 = dist(rng);
+        int r2 = dist(rng);
+        int r3 = dist(rng);
+        int r4 = dist(rng);
+        int r5 = dist(rng);
+        int r6 = dist(rng);
+        int r7 = dist(rng);
+        int r8 = dist(rng);
 
+        // Assign random values to the array
+        arreglo[i] = r1;
+        arreglo[i + 1] = r2;
+        arreglo[i + 2] = r3;
+        arreglo[i + 3] = r4;
+        arreglo[i + 4] = r5;
+        arreglo[i + 5] = r6;
+        arreglo[i + 6] = r7;
+        arreglo[i + 7] = r8;
 
+        // Copy values to the second half
+        arreglo[i + 5000] = r1;
+        arreglo[i + 5001] = r2;
+        arreglo[i + 5002] = r3;
+        arreglo[i + 5003] = r4;
+        arreglo[i + 5004] = r5;
+        arreglo[i + 5005] = r6;
+        arreglo[i + 5006] = r7;
+        arreglo[i + 5007] = r8;
     }
 
 
