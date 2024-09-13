@@ -1,4 +1,4 @@
-
+#pragma GCC optimize ("Ofast")
 #include<iostream>
 #include <chrono> // Chronometer
 #include <iomanip> // Set Second precision
@@ -9,7 +9,6 @@
 
 
 using namespace std;
-
 
 void quickSort(int a[], int primero, int ultimo) {
     int i, j, central;
