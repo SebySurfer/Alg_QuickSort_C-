@@ -72,13 +72,11 @@ int main(){
 
     future <void> asyncPrint = async(&print, arreglo);
 
-    //thread p(print, arreglo);
 
     // Set up random number generator
     mt19937 rng(time(0)); // Seed with current time
     uniform_int_distribution<int> dist(1, 100);
 
-    // Loop unrolled to process 8 elements per iteration
     for (int i = 0; i < 5000; i += 8) {
         int r1 = dist(rng);
         int r2 = dist(rng);
@@ -89,7 +87,6 @@ int main(){
         int r7 = dist(rng);
         int r8 = dist(rng);
 
-        // Assign random values to the array
         arreglo[i] = r1;
         arreglo[i + 1] = r2;
         arreglo[i + 2] = r3;
@@ -99,7 +96,6 @@ int main(){
         arreglo[i + 6] = r7;
         arreglo[i + 7] = r8;
 
-        // Copy values to the second half
         arreglo[i + 5000] = r1;
         arreglo[i + 5001] = r2;
         arreglo[i + 5002] = r3;
@@ -112,7 +108,6 @@ int main(){
 
 
     quickSort(arreglo, 5000, 9999);
-    //p.join();
 
 
     //Finish subthread
