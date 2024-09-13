@@ -50,17 +50,16 @@ void quickSort(int a[], int primero, int ultimo) {
 
 void print(int a[]){
     stringstream ss;
-    ss << "Arreglo desordenado: " << "{";
+    ss << "Arreglo desordenado: ";
     for(int i = 0; i < 5000; i++){
         ss << a[i] << " ";
     }
-    ss << "}" << endl;
+    ss << endl;
 
-    ss << "Arreglo ordenado asc: " << "{";
+    ss << "Arreglo ordenado: ";
     for(int i = 5000; i < 10000; i++){
         ss << a[i] << " ";
     }
-    ss << "}" << endl;
 
     cout << ss.str();
 
