@@ -3,7 +3,6 @@
 #include<iostream>
 #include <chrono> // Chronometer
 #include <iomanip> // Set Second precision
-#include <cstdlib> // Generare random numbers
 #include <ctime>   // Needed for time()
 #include <future>
 #include <sstream>
