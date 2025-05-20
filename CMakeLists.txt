@@ -7,4 +7,4 @@ include_directories(.)
 
 add_executable(Alg_QuickSort_C__
         main.cpp
-        main.h)
+)
